@@ -1,0 +1,75 @@
+
+
+.footerContainer {
+    background-color: #F5F0E1;
+    text-align: center;
+    margin-top: 20px;
+    
+    
+}
+
+.footerNav {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.footerLinkContainer {
+    align-items: center;
+    padding: 20px;
+}
+
+.footerPolicyContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    border-top: solid 1px black;
+}
+
+.policyNav {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.phoneIcon, .emailIcon, .locationIcon {
+    height: 16px;
+    width: 16px;
+}
+
+.supportDetails {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerNavLink {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+.footerNavLink:hover {
+    text-decoration: underline;
+}
+
+.policyNav a {
+    text-decoration: none;
+    color: black;
+}
+.policyNav a:hover {
+    text-decoration: underline;
+}
+
+
+@media screen and (min-width: 700px) {
+    .footerContainer {
+        display: flex;
+        flex-direction: column;
+    }
+    .footerLinkContainer {
+        display: flex;
+        justify-content: space-between;
+    }
+}
