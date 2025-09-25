@@ -11,6 +11,7 @@ export default function Page() {
       <p>Your one-stop destination for unique, handcrafted products made with love and care.</p>
       <Image src="" alt="Handcrafted Products" width={600} height={400} />
       <p>Discover a world of artisanal treasures, from handmade jewelry to custom home decor. Each item is crafted by skilled artisans who pour their heart into every creation.</p>
+      {/* eslint-disable-next-line react/no-unescaped-entities */}
       <p>Whether you're looking for a special gift or a treat for yourself, Handcrafted-Haven has something for everyone. Explore our curated collections and support independent makers today!</p>
       <button>
         <Link href="/products">
