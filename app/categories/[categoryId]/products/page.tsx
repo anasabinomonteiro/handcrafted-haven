@@ -8,8 +8,9 @@ import { getReviewsByProductId, getCategoryById } from "../../../lib/data";
 
 
 //dynamically fetch products based on categoryId from the database
-export default async function Page({ params }: { params: { categoryId: string}}) {
-    const { categoryId } =  await params;
+export default async function Page(props: { params: Promise<{ categoryId: string }> }) {
+    const params = await props.params;
+    const categoryId = params.categoryId;
        
     const [products, category] = await Promise.all([
         getProductsByCategory(categoryId),
@@ -24,13 +25,13 @@ export default async function Page({ params }: { params: { categoryId: string}})
         name: string;
     }>];
     //get the reviews for each product
-     const reviews = await Promise.all(products.map(product => getReviewsByProductId(product.id) as unknown as Array<{
-        id: string;
-        review_text: string;
-        rating: number;
-        product_id: string;
-        user_id: string;
-     }>));
+    //  const reviews = await Promise.all(products.map(product => getReviewsByProductId(product.id) as unknown as Array<{
+    //     id: string;
+    //     review_text: string;
+    //     rating: number;
+    //     product_id: string;
+    //     user_id: string;
+    //  }>));
     return (
         <div className={styles.productsListingPageContainer}>
             <h1>Products in {category[0].name} Category </h1>
