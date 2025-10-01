@@ -1,0 +1,37 @@
+.categoryLinksDiv {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.categoryLinkImages {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.categoryPageContainer {
+    padding: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+.categoryLink {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    border: 5px solid #8C5F3C ;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.categoryLink:hover {
+    background-color: #8C5F3C ;
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.categoryPageContainer h1, .categoryPageContainer p {
+    text-align: center;
+}
