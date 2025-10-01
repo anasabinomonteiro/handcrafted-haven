@@ -20,7 +20,9 @@ export default async function Page({ params }: { params: { categoryId: string}})
         description: string;
         price: number;
         image_url: string;
-    }>, any];
+    }>, Array<{
+        name: string;
+    }>];
     //get the reviews for each product
      const reviews = await Promise.all(products.map(product => getReviewsByProductId(product.id) as unknown as Array<{
         id: string;
