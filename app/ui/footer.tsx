@@ -1,6 +1,7 @@
 import styles from "./footer.module.css";
 import Link from "next/link";
 import { PhoneIcon, MapPinIcon, EnvelopeIcon, } from "@heroicons/react/16/solid";
+import CurrentYear from "./current-year";
 
 export default function Footer() {
     return (
@@ -12,7 +13,8 @@ export default function Footer() {
                 <div>
                     <nav className={styles.footerNav}>
                         <Link className={styles.footerNavLink} href="#">Home</Link>
-                        <Link className={styles.footerNavLink}  href="#">Products</Link>
+                        <Link className={styles.footerNavLink}  href="/categories">Categories</Link>
+                        <Link className={styles.footerNavLink}  href="/products">Products</Link>
                         <Link className={styles.footerNavLink}  href="#">About Us</Link>
                         <Link className={styles.footerNavLink}  href="#">Contact</Link>
                     </nav>
@@ -31,7 +33,8 @@ export default function Footer() {
                 </div>
             </div>
             <div className={styles.footerPolicyContainer}>
-                <p>© 2024 Handcrafted-Haven. All rights reserved.</p>
+                <CurrentYear />
+                {/* <p>© 2024 Handcrafted-Haven. All rights reserved.</p> */}
                 <div>
                     <nav className={styles.policyNav}>
                         <Link href="#">Terms</Link>
