@@ -13,11 +13,13 @@ export default function Header() {
                 <p>Handcrafted-Haven</p>
             </div>
             <nav className={styles.headerNav}>
-                <Link href="#">Home</Link>
-                <Link href="#">Products</Link>
+                <Link href="/">Home</Link>
+                <Link href="/categories">Categories</Link>
+                <Link href="/products">Products</Link>
                 <Link href="#">About</Link>
                 <Link href="#">Contact</Link>
             </nav>
+            {/*
             <div>
                 <input type="text" placeholder="Search..." />
                 <button><MagnifyingGlassCircleIcon className={styles.magnifyingGlassIcon}/></button>
@@ -26,6 +28,7 @@ export default function Header() {
                 <ShoppingCartIcon className={styles.magnifyingGlassIcon} />
                 <UserCircleIcon className={styles.magnifyingGlassIcon} />
             </div>
+            */}
         </div>
     );
 }
