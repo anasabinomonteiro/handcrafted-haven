@@ -21,6 +21,7 @@ export default async function Page() {
     //     product_id: string;
     //     user_id: string;
     //  }>));
+    console.log("Products:", products);
     return (
         <div className={styles.productsListingPageContainer}>
             <h1>All Products</h1>

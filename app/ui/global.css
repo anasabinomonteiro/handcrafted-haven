@@ -1,3 +1,11 @@
+/*color scheme*/ 
+:root {
+--color-brown: #8C5F3C;
+--color-off-white: #F5F0E1;
+--color-orange: #D97706;
+--color-olive-green: #6B8E23;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,3 +18,4 @@
       grid-template-rows: auto 1fr auto;
       min-height: 100dvh;
 }
+

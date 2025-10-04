@@ -9,7 +9,7 @@ export default function Header() {
     return (
         <div className={styles.headerContainer}>
             <div>
-                <Image src="" alt="Handcrafted-Haven Logo" width={150} height={50} />
+                <Image src="/images/handcrafted-logo.png" alt="Handcrafted-Haven Logo" width={150} height={50} />
                 <p>Handcrafted-Haven</p>
             </div>
             <nav className={styles.headerNav}>
