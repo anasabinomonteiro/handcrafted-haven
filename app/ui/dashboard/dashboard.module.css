@@ -1,0 +1,95 @@
+.dashboardPageContainer {
+    background-color: #F5F0E1;
+    overflow-x: auto;
+}
+
+.dashboardMiniContainer {
+    margin: 0 auto;
+    padding: 5px;
+    max-width: 600px;
+}
+
+.createIcon {
+    display: block;
+    width: 20px;
+    justify-self: center;
+}
+.createLink {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid #F5F0E1;
+    max-width: 200px;
+    gap: 10px;
+    padding: 10px;
+    justify-self: right;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #6B8E23;
+}
+
+.updateIcon {
+    display: block;
+    width: 20px;
+    justify-self: center;
+    color: white;
+}
+.updateLink {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid #F5F0E1;
+    max-width: 100px;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+    background-color: skyblue;
+}
+
+.deleteButton {
+    background-color: red;
+    border: 2px solid #F5F0E1;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    max-width: 200px;
+    height: 60px;
+    gap: 20px;
+    align-items: center;
+}
+
+.deleteIcon {
+    display: block;
+    width: 20px;
+    justify-self: center;
+    color: white;
+}
+
+.tBody {
+    background-color: #F5F0E1;
+}
+
+.tRow {
+    text-align: center;
+}
+
+.tTable {
+    margin-bottom: 50px;
+    padding: 10px;
+    width: 100%;
+    /* background-color: #8C5F3C; */
+}
+.tHead {
+    padding: 10px;
+}
+
+.tableContainer {
+    overflow-x: auto;
+    background-color: #8C5F3C;
+    border-radius: 10px;
+}
+
+.createLink:hover, .deleteButton:hover, .updateLink:hover {
+    border: 2px solid black;
+    text-decoration: underline;
+}

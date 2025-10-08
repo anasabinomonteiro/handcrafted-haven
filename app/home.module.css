@@ -49,3 +49,21 @@
     background-color: #c86c00;
     transform: scale(1.05);
 }
+
+.userNameBar {
+    background-color: #8C5F3C;
+    color: white;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+}
+
+.userNameLink {
+    text-decoration: none;
+    color: white;
+    font-size: smaller;
+    font-style: italic;
+}
+.userNameLink:hover {
+    text-decoration: underline;
+}

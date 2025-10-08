@@ -2,8 +2,12 @@ import styles from "./footer.module.css";
 import Link from "next/link";
 import { PhoneIcon, MapPinIcon, EnvelopeIcon, } from "@heroicons/react/16/solid";
 import CurrentYear from "./current-year";
+import SignIn from "./sign-in";
+import SignOut from "./sign-out";
+import { auth } from "../../auth.config"
 
-export default function Footer() {
+export default async function Footer() {
+    const session = await auth();
     return (
         <footer className={styles.footerContainer}>
             <div className={styles.footerLinkContainer}>
@@ -12,11 +16,12 @@ export default function Footer() {
                 </div>
                 <div>
                     <nav className={styles.footerNav}>
-                        <Link className={styles.footerNavLink} href="#">Home</Link>
+                        <Link className={styles.footerNavLink} href="/">Home</Link>
                         <Link className={styles.footerNavLink}  href="/categories">Categories</Link>
                         <Link className={styles.footerNavLink}  href="/products">Products</Link>
                         <Link className={styles.footerNavLink}  href="#">About Us</Link>
                         <Link className={styles.footerNavLink}  href="#">Contact</Link>
+                        {session ? <SignOut /> : <SignIn />}
                     </nav>
                 </div>
                 <div>
