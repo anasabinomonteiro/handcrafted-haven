@@ -6,7 +6,7 @@ import styles from "../../home.module.css"
 export default async function UserNameDisplay() {
     const session = await auth();
     return (
-    <div>
+    <div className={styles.userNameDiv}>
         {session && session?.user.role === "user" ? (
         <div className={styles.userNameBar}>
             <p>Hello, {session.user.name}!</p>
@@ -16,7 +16,7 @@ export default async function UserNameDisplay() {
         : session && session?.user.role === "seller" ? (
         <div className={styles.userNameBar}>
             <p>Hello, {session.user.name}!</p>
-            <Link className={styles.userNameLink} href={"/dashboard"}>Dashboard</Link>
+            <Link className={styles.userNameLink} href={"/dashboard"}>Go to Dashboard</Link>
         </div>
         )
         : (
