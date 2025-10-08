@@ -2,6 +2,8 @@ import { auth } from "../../../auth.config";
 import Link from "next/link";
 import styles from "../../home.module.css"
 import Image from "next/image";
+import SignIn from "@ui/sign-in";
+import SignOut from "@ui/sign-out";
 
 
 export default async function UserNameDisplay() {
@@ -14,7 +16,11 @@ export default async function UserNameDisplay() {
                 <p>Hello, {session.user.name}!</p>
                 <Image src={`${session.user.image}`} alt="User display picture" width={20} height={20} className={styles.displayPic}/>
             </div>
-            <Link className={styles.userNameLink} href={"/seller"}>Interested in becoming a seller?</Link>
+            <div className={styles.userNameAndPicDiv}>
+                <Link className={styles.userNameLink} href={"/seller"}>Interested in becoming a seller?</Link>
+                <SignOut />
+            </div>
+            
         </div>
         )
         : session && session?.user.role === "seller" ? (
@@ -23,11 +29,19 @@ export default async function UserNameDisplay() {
                 <p>Hello, {session.user.name}!</p>
                 <Image src={`${session.user.image}`} alt="User display picture" width={20} height={20} className={styles.displayPic}/>
             </div>
-            <Link className={styles.userNameLink} href={"/dashboard"}>Go to Dashboard</Link>
+            <div className={styles.userNameAndPicDiv}>
+                <Link className={styles.userNameLink} href={"/dashboard"}>Go to Dashboard</Link>
+                <SignOut />
+            </div>
         </div>
         )
         : (
-        <p className={styles.userNameBar}>Please log in.</p>
+        <div className={styles.userNameBar}>
+            <div className={styles.userNameAndPicDiv}>
+                <p>Please log in.</p>
+                <SignIn />
+            </div>
+        </div>
         )}
     </div>
     );

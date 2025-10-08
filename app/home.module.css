@@ -61,7 +61,7 @@
 }
 
 .userNameDiv {
-    border-top: 2px solid black;
+    border-top: 2px solid #F5F0E1;
 }
 
 .userNameLink {
@@ -81,4 +81,7 @@
 .userNameAndPicDiv {
     display: flex;
     gap: 20px;
+    align-items: center;
+    
 }
+
