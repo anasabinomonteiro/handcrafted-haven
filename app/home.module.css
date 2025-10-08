@@ -73,3 +73,12 @@
 .userNameLink:hover {
     text-decoration: underline;
 }
+
+.displayPic {
+    border-radius: 5px;
+}
+
+.userNameAndPicDiv {
+    display: flex;
+    gap: 20px;
+}
