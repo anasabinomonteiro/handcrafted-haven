@@ -3,7 +3,7 @@
 .footerContainer {
     background-color: #F5F0E1;
     text-align: center;
-    margin-top: 20px;
+    border-top: 4px solid #8C5F3C;
     
     
 }
@@ -64,6 +64,15 @@
 
 .lastModified {
     font-weight: bolder;
+}
+.signBtn {
+    padding: 5px;
+    background-color: #8C5F3C;
+    color: #F5F0E1;
+}
+.signBtn:hover {
+    background-color: black;
+    color: white;
 }
 
 @media screen and (min-width: 700px) {

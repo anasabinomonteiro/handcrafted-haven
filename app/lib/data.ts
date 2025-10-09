@@ -60,6 +60,17 @@ export async function getAverageReviewsByProductId(productId: string){
         FROM reviews WHERE product_id = ${productId}`;
 
         return [result]; 
+    }
+    catch (error) {
+        return error;
+    }
+}
+//function to get user role by id
+export async function getUserRoleByEmail(userEmail: string) {
+    try {
+        const userRole = await sql`
+        SELECT role FROM users WHERE email = ${userEmail}`;
+        return userRole;
     } catch (error) {
         return error;
     }
@@ -93,3 +104,13 @@ export async function getProductById(productId: string) {
     }
 }
 
+//function to get products by user id
+export async function getProductsByUserId(userId: string) {
+    try {
+        const products = await sql`
+        SELECT * FROM products WHERE user_id = ${userId}`;
+        return products;
+    } catch (error) {
+        return error;
+    }
+}
