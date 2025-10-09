@@ -1,0 +1,46 @@
+.reviewSection {
+  display: grid;
+  grid-template-columns: 0.3fr 1fr;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.summary {
+  display: grid;
+
+  .summaryReview {
+    display: flex;
+    flex-direction: column;
+
+    .total {
+      color: dimgray;
+      text-align: left;
+    }
+  }
+
+
+    .btnReview {
+      text-decoration: none;
+      border: 1px solid gray;
+      border-radius: 5px;
+      padding: 0.25em;
+      width: fit-content;
+      height: fit-content;
+      background-color: brown;
+      color: white;
+    }
+}
+
+
+
+.reviewList {
+  list-style: none;
+}
+
+.reviewItem {
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
