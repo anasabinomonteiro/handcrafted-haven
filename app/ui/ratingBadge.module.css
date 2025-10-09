@@ -1,0 +1,90 @@
+/* Amounts */
+.ratingBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ratingBadgeCenter {
+    justify-content: center;
+}
+
+.amount {
+    font-size: 0.85em;
+    vertical-align: middle;
+}
+
+.amountBig {
+    font-size: 2.5em;
+    vertical-align: middle;
+}
+
+.ratingAverage {
+    font-weight: 700;
+}
+
+.ratingCount {
+    font-weight: 500;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+/* Stars */
+.starList {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.starItem {
+  display: flex;
+  align-items: center;
+}
+
+.starIcon {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+}
+
+.starFilled {
+    margin-right: 2px;
+    color: #eab308;
+}
+
+.starEmpty {
+    color: #a9abad;
+    margin-right: 2px;
+}
+
+.starHalfWrapper {
+    position: relative;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 2px;
+    vertical-align: middle;
+}
+
+.starHalfFilled {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #eab308;
+    width: 1rem;
+    height: 1rem;
+    clip-path: inset(0 50% 0 0);
+}
+
+.starHalfOutline {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #eab308;
+    width: 1rem;
+    height: 1rem;
+    clip-path: inset(0 0 0 54%);
+}
