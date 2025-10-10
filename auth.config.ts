@@ -34,7 +34,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
       async profile(profile) {
         const dbUserList = await getUserRoleByEmail(profile.email);
         const dbUser = Array.isArray(dbUserList) ? dbUserList[0] : null;
-        console.log(dbUser);
+        //console.log(dbUser);
         return {
       id: profile.sub,
       name: profile.name,

@@ -14,10 +14,22 @@ export default async function Page(props: { params: Promise<{ productId: string 
         price: number;
         image_url: string;
     }>;
+<<<<<<< HEAD
 
       const reviews = await Promise.all(
         products.map((product) => getAverageReviewsByProductIdDb(product.id))
       );
+=======
+    //get the reviews for each product
+    //  const reviews = await Promise.all(products.map(product => getReviewsByProductId(product.id) as unknown as Array<{
+    //     id: string;
+    //     review_text: string;
+    //     rating: number;
+    //     product_id: string;
+    //     user_id: string;
+    //  }>));
+    //console.log("Products:", products);
+>>>>>>> main
     return (
         <div className={styles.productsListingPageContainer}>
             <h1>All Products</h1>
