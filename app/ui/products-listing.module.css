@@ -12,6 +12,7 @@
     aspect-ratio: 1 / 1;
     border-radius: 8px; /* optional */
     display: center;
+    width: 100%;
 }
 
 .productsListingPageContainer {
