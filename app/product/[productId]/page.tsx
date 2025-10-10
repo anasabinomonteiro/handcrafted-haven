@@ -24,12 +24,8 @@ async function getProductByIdAndReviews(productId: string) {
   };
 }
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { productId: string };
-}) {
-  const { productId } = await params;
+export default async function ProductPage(props: { params: Promise<{ productId: string }> }) {
+  const { productId } = await props.params;
 
   const { product, reviews } = await getProductByIdAndReviews(productId);
 
