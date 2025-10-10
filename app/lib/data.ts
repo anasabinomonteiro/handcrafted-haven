@@ -1,4 +1,5 @@
 import postgres from "postgres";
+import { Category } from "@ui/dashboard/create-product-form";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require'});
 
@@ -67,6 +68,24 @@ export async function getProductsByUserId(userId: string) {
         const products = await sql`
         SELECT * FROM products WHERE user_id = ${userId}`;
         return products;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getCategoriesNameAndId() {
+    try {
+        const categories = await sql<Category[]>`SELECT id, name FROM categories`;
+        return categories;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getProductByProductId(productId: string) {
+    try {
+        const product = await sql`SELECT * FROM products WHERE id = ${productId}`;
+        return product;
     } catch (error) {
         return error;
     }
