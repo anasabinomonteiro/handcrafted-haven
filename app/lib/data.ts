@@ -1,6 +1,16 @@
 import postgres from "postgres";
+import { Category } from "@ui/dashboard/create-product-form";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require'});
+export type ProductsTable = {
+  id: string;
+  user_id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  price: number;
+};
+
 
 export async function getCategories() {
     try {
@@ -113,4 +123,45 @@ export async function getProductsByUserId(userId: string) {
     } catch (error) {
         return error;
     }
+}
+
+export async function getCategoriesNameAndId() {
+    try {
+        const categories = await sql<Category[]>`SELECT id, name FROM categories`;
+        return categories;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getProductByProductId(productId: string) {
+    try {
+        const product = await sql`SELECT * FROM products WHERE id = ${productId}`;
+        return product;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function fetchProductsByQuery(
+  query: string,
+) {
+  //const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const products = await sql<ProductsTable[]>`
+      SELECT * FROM products 
+      WHERE 
+      name ILIKE ${`%${query}%`} OR
+      description ILIKE ${`%${query}%`}
+      
+        
+      
+    `;
+
+    return products;
+  } catch (error) {
+    console.error('Database Error:', error);
+    
+  }
 }

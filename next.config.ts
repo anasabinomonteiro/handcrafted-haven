@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
         port: '', // Optional: specify if a non-standard port is used
          // Optional: specify a path pattern
       },
+      {
+        protocol: 'https',
+        hostname: 'drive.google.com', // Replace with the hostname of your image source
+        port: '', // Optional: specify if a non-standard port is used
+         // Optional: specify a path pattern
+      },
     ],
   },
 };

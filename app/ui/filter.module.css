@@ -1,0 +1,11 @@
+.filterLabels {
+    display: block;
+}
+
+.filterInputs {
+    width: 100%;
+}
+.filterButton {
+    display: block;
+    width: 100%;
+}

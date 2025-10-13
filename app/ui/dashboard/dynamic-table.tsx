@@ -38,7 +38,7 @@ export function DynamicTable({products}: {products: Product[]}) {
                             {product.name}
                         </td>
                         <td>
-                            {product.price}
+                            {`$${product.price}`}
                         </td>
                         <td>
                             <Image

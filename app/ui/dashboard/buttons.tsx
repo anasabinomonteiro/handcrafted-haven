@@ -7,7 +7,7 @@ export function CreateProduct() {
   return (
     <Link
       className={styles.createLink}
-      href="/dashboard/products/create"
+      href="/products/create"
     >
       <span>Upload Product</span>
       <PlusIcon className={styles.createIcon} />
@@ -19,7 +19,7 @@ export function UpdateProduct({ id }: { id: string }) {
   return (
     <Link
       className={styles.updateLink}
-      href={`/dashboard/products/${id}/edit`}
+      href={`/products/${id}/edit`}
     >
       <span>Update Product</span>
       <PencilIcon className={styles.updateIcon} />
