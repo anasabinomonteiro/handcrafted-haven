@@ -112,23 +112,23 @@ export async function createProduct(prevState: State, formData: FormData)  {
   }
   const { userId, productPrice, productName, productDescription, categoryId, productImage  } = validatedFields.data;
   try {
-    const buffer = Buffer.from(await productImage.arrayBuffer());
-    const filename = productImage.name.replaceAll(" ", "_");
-    await writeFile(path.join(process.cwd(), "public/images/products/" + filename), buffer);
-    const url =  `/images/products/${filename}`;
+    // const buffer = Buffer.from(await productImage.arrayBuffer());
+    // const filename = productImage.name.replaceAll(" ", "_");
+    // await writeFile(path.join(process.cwd(), "public/images/products/" + filename), buffer);
+    // const url =  `/images/products/${filename}`;
   
-  // const arrayBuffer = await productImage.arrayBuffer();
-  //   const buffer = Buffer.from(arrayBuffer);
+  const arrayBuffer = await productImage.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-  //   const result = await new Promise((resolve, reject) => {
-  //     cloudinary.uploader.upload_stream({}, (error, uploadResult) => {
-  //       if (error) {
-  //         reject(error);
-  //       }
-  //       resolve(uploadResult);
-  //     }).end(buffer);
-  //   });
-  //   const url = (result as any).secure_url
+    const result = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream({}, (error, uploadResult) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(uploadResult);
+      }).end(buffer);
+    });
+    const url = (result as any).secure_url
       await sql`
     INSERT INTO products (name, description, price, user_id, category_id, image_url)
     VALUES (${productName}, ${productDescription}, ${productPrice}, ${userId}, ${categoryId}, ${url})
