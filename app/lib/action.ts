@@ -34,3 +34,7 @@ export async function updateRole(formData: FormData) {
   
  
 }
+
+export async function createProduct(formData: FormData) {
+  // TODO: FINNISH THIS FUNCTION
+}
