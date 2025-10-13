@@ -42,7 +42,11 @@ export async function getAllProducts() {
 //function to get reviews by product id
 export async function getReviewsByProductId(productId: string) {
     try {
-        const reviews = await sql`SELECT * FROM reviews WHERE product_id = ${productId}`;
+        // const reviews = await sql`SELECT * FROM reviews WHERE product_id = ${productId}`;
+        const reviews = await sql`SELECT u.name AS user, r.* 
+        FROM users AS u
+        INNER JOIN reviews AS r ON u.id = r.user_id
+        WHERE r.product_id = ${productId}`;
         return reviews;
     } catch (error) {
         return error;
@@ -60,12 +64,51 @@ export async function getCategoryById(categoryId: string) {
     }
 }
 
+export async function getAverageReviewsByProductId(productId: string){
+    try {
+        const [result] = await sql`SELECT SUM(rating)/COUNT(*) AS avg, COUNT(*) AS count
+        FROM reviews WHERE product_id = ${productId}`;
+
+        return [result]; 
+    }
+    catch (error) {
+        return error;
+    }
+}
 //function to get user role by id
 export async function getUserRoleByEmail(userEmail: string) {
     try {
         const userRole = await sql`
         SELECT role FROM users WHERE email = ${userEmail}`;
         return userRole;
+    } catch (error) {
+        return error;
+    }
+}
+
+export async function getAverageReviewsByProductIdDb(productId: string) {
+    try {
+        const [result] = await sql`
+            SELECT                 
+                COALESCE(SUM(rating)::float / NULLIF(COUNT(*), 0), 0) AS avg, 
+                COUNT(*) AS count
+            FROM reviews 
+            WHERE product_id = ${productId}
+        `;
+        return {
+            avg: parseFloat(result.avg),
+            count: parseInt(result.count, 10)
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getProductById(productId: string) {
+    try {
+        const [product] = await sql`SELECT * FROM products WHERE id = ${productId}`;
+        
+        return product;
     } catch (error) {
         return error;
     }
