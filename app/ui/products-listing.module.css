@@ -6,13 +6,13 @@
 }
 
 .productsListingLinkImages {
-    width: 200px;       /* match your Next <Image> width */
-    height: 200px;      /* match your Next <Image> height */
-    object-fit: cover;  /* crop to fill the square */
+    width: 200px;       
+    height: 200px;      
+    object-fit: cover;  
     aspect-ratio: 1 / 1;
-    border-radius: 8px; /* optional */
-    display: center;
-    width: 100%;
+    border-radius: 8px; 
+    /* display: center; */
+    max-width: 100%;
 }
 
 .productsListingPageContainer {
@@ -27,6 +27,8 @@
     border: 5px solid #8C5F3C ;
     padding: 10px;
     border-radius: 20px;
+    display: grid;
+    justify-items: center;
 }
 
 .productsListingLink:hover {
