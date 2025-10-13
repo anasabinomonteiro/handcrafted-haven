@@ -24,7 +24,7 @@ export function CreateProductForm({ categories }: { categories: Category[] }) {
             <div id="product-name-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.productName &&
                 state.errors.productName.map((error: string) => (
-                    <p key={error}>
+                    <p className={styles.errors} key={error}>
                     {error}
                     </p>
                 ))}
@@ -34,7 +34,7 @@ export function CreateProductForm({ categories }: { categories: Category[] }) {
             <div id="product-description-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.productDescription &&
                 state.errors.productDescription.map((error: string) => (
-                    <p key={error}>
+                    <p className={styles.errors} key={error}>
                     {error}
                     </p>
                 ))}
@@ -49,8 +49,16 @@ export function CreateProductForm({ categories }: { categories: Category[] }) {
                     </p>
                 ))}
             </div>
-            {/* <label htmlFor="product_image">Product Image (<span>*</span>)</label> */}
-            {/* <input type="file" name="product_image" id="product_image" /> */}
+             <label htmlFor="product_image">Product Image (<span>*</span>)</label> 
+            <input aria-describedby="product-image-error" type="file" name="product_image" id="product_image" />
+            <div id="product-image-error" aria-live="polite" aria-atomic="true">
+                {state.errors?.productImage &&
+                state.errors.productImage.map((error: string) => (
+                    <p className={styles.errors} key={error}>
+                    {error}
+                    </p>
+                ))}
+            </div>
             <label htmlFor="product_category">Product Category (<span>*</span>)</label>
             <select aria-describedby="category-error" name="category_id" id="category_id" required>
                 <option disabled>Please select a category</option>
@@ -63,7 +71,7 @@ export function CreateProductForm({ categories }: { categories: Category[] }) {
             <div id="category-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.categoryId &&
                 state.errors.categoryId.map((error: string) => (
-                    <p key={error}>
+                    <p className={styles.errors} key={error}>
                     {error}
                     </p>
                 ))}
@@ -72,7 +80,7 @@ export function CreateProductForm({ categories }: { categories: Category[] }) {
             <div id="user-id-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.userId &&
                 state.errors.userId.map((error: string) => (
-                    <p key={error}>
+                    <p className={styles.errors} key={error}>
                     {error}
                     </p>
                 ))}

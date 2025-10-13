@@ -64,3 +64,10 @@
 .productName {
     color: #8C5F3C;
 }
+.productImage {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    display: block;
+}

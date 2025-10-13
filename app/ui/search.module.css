@@ -1,0 +1,12 @@
+.searchIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.searchDiv {
+    display: flex;
+    padding: 5px;
+    justify-content: right;
+    gap: 5px;
+    background-color: #F5F0E1;
+}

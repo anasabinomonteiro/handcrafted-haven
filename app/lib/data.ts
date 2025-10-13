@@ -149,7 +149,7 @@ export async function fetchProductsByQuery(
   //const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<ProductsTable[]>`
+    const products = await sql<ProductsTable[]>`
       SELECT * FROM products 
       WHERE 
       name ILIKE ${`%${query}%`} OR
@@ -159,7 +159,7 @@ export async function fetchProductsByQuery(
       
     `;
 
-    return invoices;
+    return products;
   } catch (error) {
     console.error('Database Error:', error);
     

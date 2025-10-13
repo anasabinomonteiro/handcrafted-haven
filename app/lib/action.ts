@@ -3,8 +3,21 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
-import { z } from 'zod';
+import {  z } from 'zod';
 import { AuthError } from 'next-auth';
+import { writeFile } from 'fs/promises';
+import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+const fileSizeLimit = 5 * 1024 * 1024; // 5MB
+const MAX_IMAGE_WIDTH = 1920;
+const MAX_IMAGE_HEIGHT = 1080;
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require'});
@@ -23,7 +36,25 @@ const FormSchema = z.object({
   productDescription: z.string({
     message: 'Please type in the description of the product',
   }),
-});
+  productImage: z
+  .instanceof(File)
+  .refine(
+    (file) =>
+      [
+        "image/png",
+        "image/jpeg",
+        "image/jpg",
+        "image/svg+xml",
+        "image/gif",
+        "image/webp"
+      ].includes(file.type),
+    { message: "Invalid image file type" }
+  )
+  .refine((file) => file.size <= fileSizeLimit, {
+    message: "File size should not exceed 2MB",
+  })
+  
+})
  
 const CreateProduct = FormSchema;
 
@@ -34,6 +65,7 @@ export type State = {
     productName?: string[];
     productDescription?: string[];
     categoryId?: string[];
+    productImage?: string[];
   };
   message?: string | null;
 };
@@ -69,25 +101,40 @@ export async function createProduct(prevState: State, formData: FormData)  {
       categoryId: formData.get('category_id'),
       productName: formData.get('product_name'),
       productDescription: formData.get('product_description'),
+      productImage: formData.get('product_image'),
   });
   if (!validatedFields.success) {
+    console.log(validatedFields)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Create Product.',
     };
   }
-  const { userId, productPrice, productName, productDescription, categoryId  } = validatedFields.data;
-  console.log(userId)
-  console.log(productDescription)
-  console.log(productName)
-  console.log(productPrice)
-  console.log(categoryId)
+  const { userId, productPrice, productName, productDescription, categoryId, productImage  } = validatedFields.data;
   try {
-    await sql`
-    INSERT INTO products (name, description, price, user_id, category_id)
-    VALUES (${productName}, ${productDescription}, ${productPrice}, ${userId}, ${categoryId})
+    const buffer = Buffer.from(await productImage.arrayBuffer());
+    const filename = productImage.name.replaceAll(" ", "_");
+    await writeFile(path.join(process.cwd(), "public/images/products/" + filename), buffer);
+    const url =  `/images/products/${filename}`;
+  
+  // const arrayBuffer = await productImage.arrayBuffer();
+  //   const buffer = Buffer.from(arrayBuffer);
+
+  //   const result = await new Promise((resolve, reject) => {
+  //     cloudinary.uploader.upload_stream({}, (error, uploadResult) => {
+  //       if (error) {
+  //         reject(error);
+  //       }
+  //       resolve(uploadResult);
+  //     }).end(buffer);
+  //   });
+  //   const url = (result as any).secure_url
+      await sql`
+    INSERT INTO products (name, description, price, user_id, category_id, image_url)
+    VALUES (${productName}, ${productDescription}, ${productPrice}, ${userId}, ${categoryId}, ${url})
   `;
   } catch (error) {
+    console.log(error);
     return {
       message: 'Database Error: Failed to Create Product.',
     };
@@ -97,7 +144,7 @@ export async function createProduct(prevState: State, formData: FormData)  {
   redirect('/dashboard');
 }
 
-const UpdateProduct = FormSchema;
+const UpdateProduct = FormSchema.omit({productImage: true});
 export async function updateProduct(id: string, formData: FormData)  {
   const { userId, productPrice, productName, productDescription, categoryId  } = UpdateProduct.parse({
       userId: formData.get('user_id'),
@@ -106,12 +153,6 @@ export async function updateProduct(id: string, formData: FormData)  {
       productName: formData.get('product_name'),
       productDescription: formData.get('product_description'),
   });
-  
-  console.log(userId)
-  console.log(productDescription)
-  console.log(productName)
-  console.log(productPrice)
-  console.log(categoryId)
   try {
     await sql`
     UPDATE products

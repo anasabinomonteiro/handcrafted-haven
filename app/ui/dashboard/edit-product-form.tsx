@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react"
 import { updateRole } from "../../lib/action"
 import styles from '@ui/dashboard/product-form.module.css'
 import { updateProduct, State } from "../../lib/action"
+import Image from "next/image"
 
 export type Category = {
     name: string;
@@ -37,6 +38,7 @@ product,
         <form action={updateProductById} className={styles.form}>
             <h1>UPDATE PRODUCT: <span className={styles.productName}>{product[0].name}</span></h1>
             <p>Please note that all fields are required (<span>*</span>)</p>
+            <Image className={styles.productImage} src={product[0].image_url} height={200} width={200} alt="Product Image" />
             <label htmlFor="product_name">Product Name (<span>*</span>)</label>
             <input aria-describedby="product-name-error" title="Type the name of the product" type="text" id="product_name" name="product_name" defaultValue={product[0].name} required/>
             {/* <div id="product-name-error" aria-live="polite" aria-atomic="true">
