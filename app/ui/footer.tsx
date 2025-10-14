@@ -1,53 +1,49 @@
 import styles from "./footer.module.css";
 import Link from "next/link";
-import { PhoneIcon, MapPinIcon, EnvelopeIcon, } from "@heroicons/react/16/solid";
 import CurrentYear from "./current-year";
 import SignIn from "./sign-in";
 import SignOut from "./sign-out";
-import { auth } from "../../auth.config"
+import { auth } from "../../auth.config";
 
 export default async function Footer() {
-    const session = await auth();
-    return (
-        <footer className={styles.footerContainer}>
-            <div className={styles.footerLinkContainer}>
-                <div>
-                    <p>Your trusted destination for quality products integrated within a vibrant community</p>
-                </div>
-                <div>
-                    <nav className={styles.footerNav}>
-                        <Link className={styles.footerNavLink} href="/">Home</Link>
-                        <Link className={styles.footerNavLink}  href="/categories">Categories</Link>
-                        <Link className={styles.footerNavLink}  href="/products">Products</Link>
-                        <Link className={styles.footerNavLink}  href="#">About Us</Link>
-                        <Link className={styles.footerNavLink}  href="#">Contact</Link>
-                        {session ? <SignOut /> : <SignIn />}
-                    </nav>
-                </div>
-                <div>
-                    <nav className={styles.footerNav}>
-                        <Link className={styles.footerNavLink}  href="#">FAQ</Link>
-                        <Link className={styles.footerNavLink}  href="#">Shipping Info</Link>
-                        <Link className={styles.footerNavLink}  href="#">Track Order</Link>
-                    </nav>
-                </div>
-                <div>
-                    <p className={styles.supportDetails}><PhoneIcon className={styles.phoneIcon}/> +1 01-234-567</p>
-                    <p className={styles.supportDetails}> <EnvelopeIcon className={styles.emailIcon}/>support@handcrafted.com</p>
-                    <p className={styles.supportDetails}><MapPinIcon className={styles.locationIcon} /> #52 West Holland Avenue, USA</p>
-                </div>
-            </div>
-            <div className={styles.footerPolicyContainer}>
-                <CurrentYear />
-                {/* <p>© 2024 Handcrafted-Haven. All rights reserved.</p> */}
-                <div>
-                    <nav className={styles.policyNav}>
-                        <Link href="#">Terms</Link>
-                        <Link href="#">Cookie Policy</Link>
-                        <Link href="#">Privacy Policy</Link>
-                    </nav>
-                </div>
-            </div>
-        </footer>
-    );
+  const session = await auth();
+
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.topSection}>
+        <div className={styles.brandText}>
+          <p>
+            Your trusted destination for quality handcrafted products and
+            creative artisans.
+          </p>
+        </div>
+
+        <div className={styles.linkGroup}>
+          <h4>Explore</h4>
+          <nav className={styles.policyNav}>
+            <Link href="#">Terms</Link>
+            <Link href="#">Cookie Policy</Link>
+            <Link href="#">Privacy Policy</Link>
+          </nav>
+        </div>
+
+        <div className={styles.linkGroup}>
+          <h4>Support</h4>
+          <nav>
+            <Link href="#">FAQ</Link>
+            <Link href="#">Shipping Info</Link>
+            <Link href="#">Track Order</Link>
+          </nav>
+        </div>
+
+        <div className={styles.authSection}>
+          {session ? <SignOut /> : <SignIn />}
+        </div>
+      </div>
+
+      <div className={styles.bottomSection}>
+        <CurrentYear />
+      </div>
+    </footer>
+  );
 }

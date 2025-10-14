@@ -32,8 +32,8 @@ export default function Header() {
                 <Link href="/">Home</Link>
                 <Link href="/categories">Categories</Link>
                 <Link href="/products">Products</Link>
-                <Link href="#">About</Link>
-                <Link href="#">Contact</Link>
+                <Link href="/about">About</Link>
+                <Link href="/contact">Contact</Link>
             </nav>
 
             {/* 

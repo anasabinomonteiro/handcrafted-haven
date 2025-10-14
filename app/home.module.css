@@ -52,16 +52,12 @@
 }
 
 .userNameBar {
-    background-color: #8C5F3C;
-    color: white;
+    background-color: #8c5f3c8e;
+    color: black;
     display: flex;
     padding: 10px;
     justify-content: space-between;
     
-}
-
-.userNameDiv {
-    border-top: 2px solid #F5F0E1;
 }
 
 .userNameLink {
