@@ -1,49 +1,68 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarOutlineIcon } from '@heroicons/react/24/outline';
 import styles from "@ui/review-form.module.css";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
+import {createReview} from '@lib/action'
+import Link from 'next/dist/client/link';
 
 interface ReviewFormProps {
     params: Promise<{ id: string }>;
 }
 
+interface Errors {
+    rating?: string;
+    reviewText?: string;
+}
+
+interface Product {
+    id: string;
+    name: string;
+    image_url: string;
+}
+
 export default function ReviewForm({ params }: ReviewFormProps) {
-    const [productId, setProductId] = useState<string>('');
+    const { data: session, status } = useSession();
+    const userId = session?.user?.id;
+    console.log("User ID:", userId);
+
+    const [productId, setProductId] = useState('');
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
-    const [reviewTitle, setReviewTitle] = useState('');
     const [reviewText, setReviewText] = useState('');
-    const [reviewerName, setReviewerName] = useState('');
-    const [reviewerEmail, setReviewerEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [errors, setErrors] = useState<Record<string, string>>({});
+    const [errors, setErrors] = useState<Errors>({});
+    const [product, setProduct] = useState<Product | null>(null);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
     // Unwrap the params promise
-    useState(() => {
-        params.then(({ id }) => setProductId(id));
-    });
+    useEffect(() => {
+        params.then(async ({ id }) => {
+            setProductId(id);
+            const res = await fetch(`/api/products/${id}`);
+            const data = await res.json();
+            setProduct(data);
+            console.log(data);
+        });
+    }, [params]);
+
+    if (!session || !session.user) {
+        return (
+            <div>
+                <h2>Please Sign In to Write a Review</h2>
+                <p>You must be signed in to submit a review. Please <Link href="/api/auth/signin">sign in</Link> to continue.</p>
+            </div>
+        );
+    }
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {};
 
-        if (!reviewerName.trim()) {
-            newErrors.reviewerName = 'Name is required';
-        }
-        
-        if (!reviewerEmail.trim()) {
-            newErrors.reviewerEmail = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(reviewerEmail)) {
-            newErrors.reviewerEmail = 'Please enter a valid email address';
-        }
-
         if (rating === 0) {
             newErrors.rating = 'Please select a rating';
-        }
-
-        if (!reviewTitle.trim()) {
-            newErrors.reviewTitle = 'Review title is required';
         }
 
         if (!reviewText.trim()) {
@@ -67,29 +86,18 @@ export default function ReviewForm({ params }: ReviewFormProps) {
 
         try {
             // API REQUEST OR DATABASE CALL TO SUBMIT REVIEW
-            await new Promise(resolve => setTimeout(resolve, 1000)); // This simulates a network request
+            //await new Promise(resolve => setTimeout(resolve, 1000)); // This simulates a network request
+            if (!userId) throw new Error('User not authenticated');
+            if (!productId) throw new Error('Product ID is missing');
+            await createReview(reviewText, rating, userId, productId);
             
-            console.log('Review submitted:', {
-                productId,
-                rating,
-                reviewTitle,
-                reviewText,
-                reviewerName,
-                reviewerEmail,
-            });
-
-            // Reset form
-            setRating(0);
-            setReviewTitle('');
-            setReviewText('');
-            setReviewerName('');
-            setReviewerEmail('');
-            setErrors({});
-            
-            alert('Thank you! Your review has been submitted successfully.');
+            //alert('Thank you! Your review has been submitted successfully.');
+            // Return to product page after submission
+            if (product) {
+                window.location.href = `/product/${product.id}`;
+            }
         } catch (error) {
             console.error('Error submitting review:', error);
-            alert('There was an error submitting your review. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -129,47 +137,26 @@ export default function ReviewForm({ params }: ReviewFormProps) {
                         Write a Review
                     </h1>
                     <p className={styles.subtitle}>
-                        Share your experience with this handcrafted product (ID: {productId})
+                        Share your experience with product {product ? `"${product.name}"` : ''}
                     </p>
 
+
+                    <div className={styles.imageContainer}>
+                        {!imageLoaded && <div className={styles.imageSkeleton} />}
+                        {product && (
+                            <Image
+                                src={product.image_url}
+                                alt={product.name}
+                                width={400}
+                                height={300}
+                                className={styles.productImage}
+                                priority
+                                onLoad={() => setImageLoaded(true)}
+                            />
+                        )}
+                    </div>
+
                     <form onSubmit={handleSubmit} className={styles.form}>
-                        {/* Personal Information */}
-                        <div className={styles.inputGrid}>
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="reviewerName" className={styles.label}>
-                                    Your Name *
-                                </label>
-                                <input
-                                    type="text"
-                                    id="reviewerName"
-                                    value={reviewerName}
-                                    onChange={(e) => setReviewerName(e.target.value)}
-                                    className={`${styles.input} ${errors.reviewerName ? styles.error : ''}`}
-                                    placeholder="Enter your full name"
-                                />
-                                {errors.reviewerName && (
-                                    <p className={styles.errorMessage}>{errors.reviewerName}</p>
-                                )}
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="reviewerEmail" className={styles.label}>
-                                    Your Email *
-                                </label>
-                                <input
-                                    type="email"
-                                    id="reviewerEmail"
-                                    value={reviewerEmail}
-                                    onChange={(e) => setReviewerEmail(e.target.value)}
-                                    className={`${styles.input} ${errors.reviewerEmail ? styles.error : ''}`}
-                                    placeholder="Enter your email address"
-                                />
-                                {errors.reviewerEmail && (
-                                    <p className={styles.errorMessage}>{errors.reviewerEmail}</p>
-                                )}
-                            </div>
-                        </div>
-
                         {/* Rating */}
                         <div className={styles.inputGroup}>
                             <label className={styles.label}>
@@ -178,25 +165,6 @@ export default function ReviewForm({ params }: ReviewFormProps) {
                             {renderStars()}
                             {errors.rating && (
                                 <p className={styles.errorMessage}>{errors.rating}</p>
-                            )}
-                        </div>
-
-                        {/* Review Title */}
-                        <div className={styles.inputGroup}>
-                            <label htmlFor="reviewTitle" className={styles.label}>
-                                Review Title *
-                            </label>
-                            <input
-                                type="text"
-                                id="reviewTitle"
-                                value={reviewTitle}
-                                onChange={(e) => setReviewTitle(e.target.value)}
-                                className={`${styles.input} ${errors.reviewTitle ? styles.error : ''}`}
-                                placeholder="Summarize your review in a few words"
-                                maxLength={100}
-                            />
-                            {errors.reviewTitle && (
-                                <p className={styles.errorMessage}>{errors.reviewTitle}</p>
                             )}
                         </div>
 

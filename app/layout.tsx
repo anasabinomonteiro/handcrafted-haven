@@ -5,7 +5,7 @@ import Header from './ui/header';
 import './ui/global.css';
 import { auth } from "../auth.config";
 import UserNameDisplay from '@ui/buttons/user-name-display';
-
+import { SessionProvider } from "next-auth/react";
  
 export const metadata: Metadata = {
   title: {
@@ -23,12 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className='page-container'>
-          <Header />
-          <UserNameDisplay />
-          {children}
-          <Footer />
-        </div>
+        <SessionProvider>
+          <div className='page-container'>
+            <Header />
+            <UserNameDisplay />
+            {children}
+            <Footer />
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );

@@ -166,3 +166,32 @@ export async function updateProduct(id: string, formData: FormData)  {
   revalidatePath('/dashboard');
   redirect('/dashboard');
 }
+
+export async function createReview(review_text: string, rating: number, userId: string, productId: string) {
+  if (Number.isNaN(rating) || !review_text || !userId || !productId) {
+    return {
+      errors: {
+        rating: Number.isNaN(rating) ? 'Rating is required' : undefined,
+        reviewText: !review_text ? 'Review text is required' : undefined,
+        userId: !userId ? 'User ID is required' : undefined,
+        productId: !productId ? 'Product ID is required' : undefined,
+      },
+      message: 'Missing Fields. Failed to Create Review.',
+    };
+  }
+
+  try {
+    await sql`
+      INSERT INTO reviews (rating, review_text, user_id, product_id)
+      VALUES (${rating}, ${review_text}, ${userId}, ${productId})
+    `;
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Database Error: Failed to Create Review.',
+    };
+  }
+
+  revalidatePath(`/product/${productId}`);
+  redirect(`/product/${productId}`);
+}
