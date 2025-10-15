@@ -19,6 +19,28 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+interface CloudinaryUploadResult {
+  asset_id: string;
+  public_id: string;
+  version: number;
+  version_id: string;
+  signature: string;
+  width: number;
+  height: number;
+  format: string;
+  resource_type: string;
+  created_at: string;
+  tags: string[];
+  bytes: number;
+  type: string;
+  etag: string;
+  placeholder: boolean;
+  url: string;
+  secure_url: string;
+  folder?: string;
+  original_filename?: string;
+}
+
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require'});
 const FormSchema = z.object({
@@ -128,7 +150,7 @@ export async function createProduct(prevState: State, formData: FormData)  {
         resolve(uploadResult);
       }).end(buffer);
     });
-    const url = (result as any).secure_url
+    const url = (result as CloudinaryUploadResult).secure_url;
       await sql`
     INSERT INTO products (name, description, price, user_id, category_id, image_url)
     VALUES (${productName}, ${productDescription}, ${productPrice}, ${userId}, ${categoryId}, ${url})
