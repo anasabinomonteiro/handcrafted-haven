@@ -7,9 +7,21 @@ import styles from "@ui/review-form.module.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import {createReview} from '@lib/action'
+import Link from 'next/dist/client/link';
 
 interface ReviewFormProps {
     params: Promise<{ id: string }>;
+}
+
+interface Errors {
+    rating?: string;
+    reviewText?: string;
+}
+
+interface Product {
+    id: string;
+    name: string;
+    image_url: string;
 }
 
 export default function ReviewForm({ params }: ReviewFormProps) {
@@ -22,8 +34,8 @@ export default function ReviewForm({ params }: ReviewFormProps) {
     const [hoverRating, setHoverRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [errors, setErrors] = useState<Record<string, string>>({});
-    const [product, setProduct] = useState<any>(null);
+    const [errors, setErrors] = useState<Errors>({});
+    const [product, setProduct] = useState<Product | null>(null);
     const [imageLoaded, setImageLoaded] = useState(false);
 
     // Unwrap the params promise
@@ -41,7 +53,7 @@ export default function ReviewForm({ params }: ReviewFormProps) {
         return (
             <div>
                 <h2>Please Sign In to Write a Review</h2>
-                <p>You must be signed in to submit a review. Please <a href="/api/auth/signin">sign in</a> to continue.</p>
+                <p>You must be signed in to submit a review. Please <Link href="/api/auth/signin">sign in</Link> to continue.</p>
             </div>
         );
     }
