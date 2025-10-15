@@ -87,6 +87,7 @@ export default async function Page(props: { params: Promise<{ categoryId: string
         const reviews = await Promise.all(
         products.map((product) => getAverageReviewsByProductIdDb(product.id))
         );
+
         return (
             <>
             <div className={styles.filterBar}>
@@ -183,7 +184,8 @@ export default async function Page(props: { params: Promise<{ categoryId: string
      const reviews = await Promise.all(
        products.map((product) => getAverageReviewsByProductIdDb(product.id))
      );
-    
+
+        
     return (
         <>
         <div className={styles.filterBar}>
