@@ -12,6 +12,7 @@ export interface Review {
 
 interface Props {
   reviews: Review[];
+  productId: string;
 }
 
 export const getReviewsStats = (reviews: Review[])=> {
@@ -22,7 +23,7 @@ export const getReviewsStats = (reviews: Review[])=> {
   return {count, avg};
 }
 
-export default function ReviewSection({ reviews }: Props) {
+export default function ReviewSection({ reviews, productId }: Props) {
   const {count, avg} = getReviewsStats(reviews);
 
   return (
@@ -33,7 +34,7 @@ export default function ReviewSection({ reviews }: Props) {
           <p className={styles.total}>{count} reviews</p>
         </div>
 
-        <Link href="/review-form/id" className={styles.btnReview}>
+        <Link href={`/review-form/${productId}`} className={styles.btnReview}>
         Write a review
         </Link>
        

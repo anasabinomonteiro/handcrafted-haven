@@ -69,7 +69,7 @@ export default async function ProductPage(props: { params: Promise<{ productId: 
 
       <div className={productStyles.divider}></div>
 
-      <ReviewSection reviews={reviews} />
+      <ReviewSection reviews={reviews} productId={product.id} />
     </ProductScroll>
   );
 }
